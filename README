@@ -6,3 +6,9 @@ Requires:
 Sinatra: http://github.com/sinatra/sinatra/tree/master
 OAuth for Ruby: http://github.com/pelle/oauth/tree/master
 OAuth Provider for Ruby: http://github.com/halorgium/oauth_provider/tree/master
+
+Since the oauth_provider does not have a gem yet.
+In the project:
+  mkdir lib
+  cd lib
+  git clone git://github.com/halorgium/oauth_provider.git
