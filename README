@@ -9,6 +9,16 @@ OAuth Provider for Ruby: http://github.com/halorgium/oauth_provider/tree/master
 
 Since the oauth_provider does not have a gem yet.
 In the project:
+
   mkdir lib
   cd lib
   git clone git://github.com/halorgium/oauth_provider.git
+
+One fix to oauth_provider class.
+From http://github.com/singpolyma/oauth_provider we need to add the following to access the db from the provider obj.
+
+In /lib/oauth_provider/lib/provider.rb add:
+
+  attr_reader :backend
+
+Thanks to pelle, halorgium (for auth_provider), and singpolyma (for the simple Sinatra example)! And to the Vancouver "Ruby in the Rain" event for opening my eyes to Sinatra. You guys rock!
