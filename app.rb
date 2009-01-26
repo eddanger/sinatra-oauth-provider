@@ -5,7 +5,7 @@ require 'dm-validations'
 require 'dm-timestamps'
 require 'dm-serializer'
 require 'oauth/request_proxy/rack_request'
-require File.dirname(__FILE__) + '/lib/oauth_provider'
+require File.dirname(__FILE__) + '/lib/oauth_provider/lib/oauth_provider'
 
 DataMapper.setup(:default, "sqlite3:///#{Dir.pwd}/test.sqlite3")
  
