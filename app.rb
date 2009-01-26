@@ -71,23 +71,26 @@ post "/oauth/authorize" do
 end
 
 get "/oauth/applications" do
+  @consumers = provider.consumers
   erb :applications
 end
 
 post '/oauth/applications' do
   begin
     @consumer = provider.add_consumer(params[:application_callback])
+
+    #redirect "/oauth/applications"
+    @shared_key = @consumer.token.shared_key
+    @secret_key = @consumer.token.secret_key
+
   rescue Exception
-    halt "Failed to create a token!"
+    @error = "Failed to create a token!"
   end
-  
-  #redirect "/oauth/applications"
-  @shared_key = @consumer.token.shared_key
-  @secret_key = @consumer.token.secret_key
-  
+
+  @consumers = provider.consumers
+
   erb :applications
 end
-
 
 
 

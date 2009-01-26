@@ -1,20 +1,43 @@
-<% if @shared_key and @secret_key %>
-	<h2>Application created!</h2>
-	
-	<h3>Save this information!</h3>
-	
-	<b>Shared Key:</b>
-	<%= @shared_key %>
-	<br/>
+<% if @error %>
+	<div style="background-color: #fee; padding: 20px; margin-bottom: 10px;">
+		<h2>Oops!</h2>
+		
+		<p><%= @error %></p>
+	</div>
+<% end %>
 
-	<b>Secret Key:</b>
-	<%= @secret_key %>
+<% if @shared_key and @secret_key %>
+	<div style="background-color: #efe; padding: 20px; margin-bottom: 10px;">
+		<h2>Application created!</h2>
+	
+		<h3>Save this information!</h3>
+	
+		<b>Shared Key:</b>
+		<%= @shared_key %>
+		<br/>
+
+		<b>Secret Key:</b>
+		<%= @secret_key %>
+	</div>
 <% end %>
 
 
 <h2>My Applications</h2>
 
-<p><i>To do: list apps here...</p>
+<% if !@consumers.empty? %>
+	<% @consumers.each do |consumer| %>
+		<div style="background-color: #eef; padding: 20px; margin-bottom: 10px;">
+			<b><%= consumer.callback %></b>
+			<p>
+				<b>Shared Key:</b> <%= consumer.token.shared_key %>
+				<br/>
+				<b>Secret Key:</b> <%= consumer.token.secret_key %>
+			</p>
+		</div>
+	<% end %>
+<% else %>
+	You don't have any applications... yet.
+<% end %>
 
 <h3>Create New Application</h3>
 
