@@ -1,0 +1,30 @@
+<% if @shared_key and @secret_key %>
+	<h2>Application created!</h2>
+	
+	<h3>Save this information!</h3>
+	
+	<b>Shared Key:</b>
+	<%= @shared_key %>
+	<br/>
+
+	<b>Secret Key:</b>
+	<%= @secret_key %>
+<% end %>
+
+
+<h2>My Applications</h2>
+
+<p><i>To do: list apps here...</p>
+
+<h3>Create New Application</h3>
+
+<div class="app">
+  <form action="/oauth/applications" method="POST">
+		<div>
+			Application Callback:
+			<br/>
+			<input type="text" name="application_callback" id="application_callback" rows="20" />
+		</div>
+		<input type="submit" value="Create Application"/>
+  </form>
+</div>

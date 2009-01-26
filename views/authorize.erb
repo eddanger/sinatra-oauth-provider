@@ -1,0 +1,10 @@
+<h2>You are about to authorize (<%= @request_token.consumer.callback %>)</h2>
+<form action="/oauth/authorize" method="post">
+  <p>
+    <input id="oauth_token" name="oauth_token" type="hidden" value="<%= @request_token.shared_key %>" />
+  </p>
+
+  <p>
+    <input name="commit" type="submit" value="Authorize" />
+  </p>
+</form>

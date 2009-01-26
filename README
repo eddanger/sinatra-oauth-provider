@@ -1,0 +1,8 @@
+An experiment in creating a Sinatra OAuth Provider.
+
+Start the app with "ruby app.rb" and use it to create a message or two and a new consumer oauth application. When created, add the shared key and secret to the keys.rb file. Run "ruby request.rb" to get the authorization url and request token and secret. Add the request token and secret to the keys.rb file. Authorize your app. Then run "ruby access.rb" to get your access token and secret, and to keys.rb as well. Finally with your access tokens you can run "ruby query.rb" to call the API.
+
+Requires:
+Sinatra: http://github.com/sinatra/sinatra/tree/master
+OAuth for Ruby: http://github.com/pelle/oauth/tree/master
+OAuth Provider for Ruby: http://github.com/halorgium/oauth_provider/tree/master
