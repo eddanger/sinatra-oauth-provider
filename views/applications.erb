@@ -6,18 +6,18 @@
 	</div>
 <% end %>
 
-<% if @shared_key and @secret_key %>
+<% if @consumer_key and @consumer_secret %>
 	<div style="background-color: #efe; padding: 20px; margin-bottom: 10px;">
 		<h2>Application created!</h2>
 	
 		<h3>Save this information!</h3>
 	
-		<b>Shared Key:</b>
-		<%= @shared_key %>
+		<b>Consumer Key:</b>
+		<%= @consumer_key %>
 		<br/>
 
-		<b>Secret Key:</b>
-		<%= @secret_key %>
+		<b>Consumer Secret:</b>
+		<%= @consumer_secret %>
 	</div>
 <% end %>
 
@@ -29,9 +29,9 @@
 		<div style="background-color: #eef; padding: 20px; margin-bottom: 10px;">
 			<b><%= consumer.callback %></b>
 			<p>
-				<b>Shared Key:</b> <%= consumer.token.shared_key %>
+				<b>Consumer Key:</b> <%= consumer.token.shared_key %>
 				<br/>
-				<b>Secret Key:</b> <%= consumer.token.secret_key %>
+				<b>Consumer Secret:</b> <%= consumer.token.secret_key %>
 			</p>
 		</div>
 	<% end %>

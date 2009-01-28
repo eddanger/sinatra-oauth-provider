@@ -1,2 +1,3 @@
-lib/*
 .DS_Store
+provider.sqlite3
+consumer.sqlite3

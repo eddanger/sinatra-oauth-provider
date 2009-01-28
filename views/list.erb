@@ -1,13 +1,13 @@
 <h2>My Messages</h2>
 
-<% if !@messages.empty? %>
-	<ul>
-	<% @messages.each do |message| %>
-		<li><a href="/messages/<%= message.id %>"><%= message.name %></a></li>
-	<% end %>
-	</ul>
-<% else %>
-	You don't have any messages.
+<% if @messages.empty? %>
+		You don't have any messages.
+	<% else %>
+		<ul>
+		<% @messages.each do |message| %>
+			<li><a href="/messages/<%= message.id %>"><%= message.name %></a></li>
+		<% end %>
+		</ul>
 <% end %>
 
 <h3>Create New Message</h3>
