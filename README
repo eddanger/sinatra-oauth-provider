@@ -15,10 +15,10 @@ Requirements and Installation
   OAuth for Ruby: http://github.com/pelle/oauth
 		sudo gem install oauth
 
-  OAuth Provider for Ruby: http://github.com/singpolyma/oauth_provider
+  OAuth Provider for Ruby: git clone git://github.com/halorgium/oauth_provider.git
 		Since there is no gem yet you will need to do the following:
   		cd lib
-  		git clone git://github.com/singpolyma/oauth_provider.git
+  		git clone git clone git://github.com/halorgium/oauth_provider.git
 
 Thanks to pelle, halorgium (for auth_provider), and singpolyma (for the simple Sinatra example and provider fix)! And to the Vancouver "Ruby in the Rain" event for opening my eyes to Sinatra. You guys rock!
 
