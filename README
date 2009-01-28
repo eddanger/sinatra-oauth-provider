@@ -1,4 +1,4 @@
-An experiment in creating a Sinatra OAuth Provider and Consumer
+An experiment in creating a Sinatra OAuth Provider, Consumer and API wrapper.
 
 To run the provider:
 	ruby provider.rb
@@ -8,25 +8,18 @@ To run the consumer:
 	ruby consumer.rb -p 5678
 	Go to http://localhost:5678/
 	
+Requirements and Installation
+  Sinatra: http://github.com/sinatra/sinatra
+		sudo gem install sinatra
+
+  OAuth for Ruby: http://github.com/pelle/oauth
+		sudo gem install oauth
+
+  OAuth Provider for Ruby: http://github.com/singpolyma/oauth_provider
+		Since there is no gem yet you will need to do the following:
+  		cd lib
+  		git clone git://github.com/singpolyma/oauth_provider.git
+
+Thanks to pelle, halorgium (for auth_provider), and singpolyma (for the simple Sinatra example and provider fix)! And to the Vancouver "Ruby in the Rain" event for opening my eyes to Sinatra. You guys rock!
+
 Enjoy!
-
-Requires:
-Sinatra: http://github.com/sinatra/sinatra/tree/master
-OAuth for Ruby: http://github.com/pelle/oauth/tree/master
-OAuth Provider for Ruby: http://github.com/halorgium/oauth_provider/tree/master
-
-Since the oauth_provider does not have a gem yet.
-In the project:
-
-  mkdir lib
-  cd lib
-  git clone git://github.com/halorgium/oauth_provider.git
-
-One fix to oauth_provider class.
-From http://github.com/singpolyma/oauth_provider we need to add the following to access the db from the provider obj.
-
-In /lib/oauth_provider/lib/provider.rb add:
-
-  attr_reader :backend
-
-Thanks to pelle, halorgium (for auth_provider), and singpolyma (for the simple Sinatra example)! And to the Vancouver "Ruby in the Rain" event for opening my eyes to Sinatra. You guys rock!
