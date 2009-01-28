@@ -1,6 +1,14 @@
-An experiment in creating a Sinatra OAuth Provider.
+An experiment in creating a Sinatra OAuth Provider and Consumer
 
-Start the app with "ruby app.rb" and use it to create a message or two and a new consumer oauth application. When created, add the shared key and secret to the keys.rb file. Run "ruby request.rb" to get the authorization url and request token and secret. Add the request token and secret to the keys.rb file. Authorize your app. Then run "ruby access.rb" to get your access token and secret, add to keys.rb as well. Finally with your access tokens you can run "ruby query.rb" to call the API.
+To run the provider:
+	ruby provider.rb
+	Go to http://localhost:4567/
+
+To run the consumer:
+	ruby consumer.rb -p 5678
+	Go to http://localhost:5678/
+	
+Enjoy!
 
 Requires:
 Sinatra: http://github.com/sinatra/sinatra/tree/master
