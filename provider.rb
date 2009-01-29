@@ -4,10 +4,16 @@ require 'dm-core'
 require 'dm-validations'
 require 'dm-timestamps'
 require 'dm-serializer'
-require 'oauth/request_proxy/rack_request'
-require File.dirname(__FILE__) + '/lib/oauth_provider/lib/oauth_provider'
-#require 'restfulx'
-#require File.dirname(__FILE__) + '/lib/restfulx/lib/restfulx'
+require File.dirname(__FILE__) + '/lib/rack_oauth_provider'
+
+# a list of oauth protected paths
+paths = {
+  Regexp.new('\/messages.json') => [:get, :post],
+  Regexp.new('\/messages\/[0-9]+.json') => [:get, :put, :delete],
+}
+
+use RackOAuthProvider, paths do
+end
 
 DataMapper.setup(:default, "sqlite3:///#{Dir.pwd}/provider.sqlite3")
  
@@ -24,10 +30,7 @@ end
 
 DataMapper.auto_upgrade!
 
-provider = OAuthProvider::create(:sqlite3, 'test.sqlite3')
-#provider = OAuthProvider::create(:data_mapper, 'test.sqlite3')
-
-mime :json, "application/json"
+set :views, File.dirname(__FILE__) + '/views'
 
 error do
   exception = request.env['sinatra.error']
@@ -36,62 +39,6 @@ error do
 
   @error = "Oh my! Something went awry. (" + exception.message + ")"
   erb :error
-end
-
-# OAuth routes
-get "/oauth/request_token" do
-  provider.issue_request(request).query_string
-end
-
-get "/oauth/access_token" do
-  if access_token = provider.upgrade_request(request)
-    access_token.query_string
-  else
-    raise Sinatra::NotFound, "No such request token"
-  end
-end
-
-# Authorize endpoints
-get "/oauth/authorize" do
-  if @request_token = provider.backend.find_user_request(params[:oauth_token])
-    erb :authorize
-  else
-    raise Sinatra::NotFound, "No such request token"
-  end
-end
-
-post "/oauth/authorize" do
-  if request_token = provider.backend.find_user_request(params[:oauth_token])
-    if request_token.authorize
-      redirect request_token.callback
-    else
-      raise "Could not authorize"
-    end
-  else
-    raise Sinatra::NotFound, "No such request token"
-  end
-end
-
-get "/oauth/applications" do
-  @consumers = provider.consumers
-  erb :applications
-end
-
-post '/oauth/applications' do
-  begin
-    @consumer = provider.add_consumer(params[:application_callback])
-
-    #redirect "/oauth/applications"
-    @consumer_key = @consumer.token.shared_key
-    @consumer_secret = @consumer.token.secret_key
-
-  rescue Exception
-    @error = "Failed to create a token!"
-  end
-
-  @consumers = provider.consumers
-
-  erb :applications
 end
 
 # index!
@@ -126,14 +73,10 @@ get '/messages/:id' do
 end
 
 get '/:model.json' do
-  oauth_confirm_access(provider, request)
-
   "#{params[:model]}".singularize.camelize.to_class.all.to_json
 end
 
 post '/:model.json' do
-  oauth_confirm_access(provider, request)
-  
 	name = params[:model].singularize
 	record = name.camelize.to_class.new(JSON.parse(CGI::unescape(request.body.string))[name])
 	record.save
@@ -141,14 +84,10 @@ post '/:model.json' do
 end
 
 get '/:model/:id.json' do
-  oauth_confirm_access(provider, request)
-
 	"#{params[:model]}".singularize.camelize.to_class.get(params[:id]).to_json
 end
 
 put '/:model/:id.json' do
-  oauth_confirm_access(provider, request)
-
 	name = params[:model].singularize
 	record = name.camelize.to_class.get(params[:id])
 	record.update_attributes(JSON.parse(request.body.string)[name])
@@ -156,8 +95,6 @@ put '/:model/:id.json' do
 end
 
 delete '/:model/:id.json' do
-  oauth_confirm_access(provider, request)
-
 	record = "#{params[:model]}".singularize.camelize.to_class.get(params[:id])
 	result = record.to_json
 	record.destroy
@@ -165,14 +102,6 @@ delete '/:model/:id.json' do
 end
 
 private
-
-def oauth_confirm_access(provider, request)
-  begin
-    access = provider.confirm_access(request)
-  rescue Exception
-    halt "No access! Please verify your OAuth access token and secret."
-  end
-end
 
 class String
   def to_class
