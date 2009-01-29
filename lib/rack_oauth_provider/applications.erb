@@ -1,0 +1,53 @@
+<% if @error %>
+	<div style="background-color: #fee; padding: 20px; margin-bottom: 10px;">
+		<h2>Oops!</h2>
+		
+		<p><%= @error %></p>
+	</div>
+<% end %>
+
+<% if @consumer_key and @consumer_secret %>
+	<div style="background-color: #efe; padding: 20px; margin-bottom: 10px;">
+		<h2>Application created!</h2>
+	
+		<h3>Save this information!</h3>
+	
+		<b>Consumer Key:</b>
+		<%= @consumer_key %>
+		<br/>
+
+		<b>Consumer Secret:</b>
+		<%= @consumer_secret %>
+	</div>
+<% end %>
+
+
+<h2>My Applications</h2>
+
+<% if !@consumers.empty? %>
+	<% @consumers.each do |consumer| %>
+		<div style="background-color: #eef; padding: 20px; margin-bottom: 10px;">
+			<b><%= consumer.callback %></b>
+			<p>
+				<b>Consumer Key:</b> <%= consumer.token.shared_key %>
+				<br/>
+				<b>Consumer Secret:</b> <%= consumer.token.secret_key %>
+			</p>
+		</div>
+	<% end %>
+<% else %>
+	You don't have any applications... yet.
+<% end %>
+
+<h3>Create New Application</h3>
+
+<div class="app">
+  <form action="/oauth/applications" method="POST">
+		<div>
+			Application Callback:
+			<br/>
+			<input type="text" name="application_callback" id="application_callback" rows="20" />
+		</div>
+		<input type="submit" value="Create Application"/>
+  </form>
+</div>
