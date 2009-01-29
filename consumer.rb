@@ -38,6 +38,15 @@ before do
   end
 end
 
+error do
+  exception = request.env['sinatra.error']
+  warn "%s: %s" % [exception.class, exception.message]
+  warn exception.backtrace.join("\n")
+
+  @error = "Oh my! Something went awry. (" + exception.message + ")"
+  erb :error
+end
+
 # index!
 get '/' do
   erb :index
