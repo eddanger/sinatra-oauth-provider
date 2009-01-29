@@ -13,16 +13,20 @@ Go to http://localhost:5678/
 	
 # Requirements and Installation
 
-## Sinatra: http://sinatra.github.com/
+**Sinatra: http://sinatra.github.com/**
+
 	sudo gem install sinatra
 
-## Datamapper: http://datamapper.org/
+**Datamapper: http://datamapper.org/**
+
 	sudo gem install datamapper
 
-## OAuth for Ruby: http://github.com/pelle/oauth
+**OAuth for Ruby: http://github.com/pelle/oauth**
+
 	sudo gem install oauth
 
-## OAuth Provider for Ruby: git clone git://github.com/halorgium/oauth_provider.git
+**OAuth Provider for Ruby: http://github.com/halorgium/oauth_provider**
+
 Since there is no gem yet you will need to do the following:
 		cd lib
 		git clone git://github.com/halorgium/oauth_provider.git
